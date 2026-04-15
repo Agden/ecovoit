@@ -1,0 +1,236 @@
+:root {
+    --noir: #1B2021;
+    --blanc: #FAFAFA;
+    --gris: #414141;
+    --vert: #77AD31;
+    --vert-clair: #E6FAAF;
+    --verhover: #88C539;
+    --vert-f:#567A26;
+}
+
+::selection {
+    background-color: var(--vert);
+    color: var(--gris);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* BODY */
+
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.card-accueil {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+}
+
+.card-accueil img {
+  width: 90%;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.card-titre {
+    text-align: center;
+    color: var(--vert-f);
+    font-weight: 700;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.slogan {
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: var(--gris);
+}
+
+/* BOUTONS 
+- Créer un compte
+- Se connecter */
+
+.btn-creation, .btn-connexion,
+.card-body a {
+  display: inline-block;
+  padding: .5rem 1.1rem;
+  margin: .4rem;
+  width: 90%;
+  background-color: var(--vert);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: var(--vert-clair);
+  border: 3px solid var(--blanc);
+  border-radius: 1.1rem;
+  text-align: center;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.card-body a:hover {
+  text-decoration: none;
+  color: var(--vert-clair);
+}
+
+/* FORM CREA + CONNEXION */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-creation, 
+.form-connexion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.form-creation h3,
+.form-connexion h3 {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: var(--vert);
+  margin: 1rem;
+  text-align: center;
+}
+
+.form-creation input,
+.form-connexion input {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  margin: .4rem;
+  width: 90%;
+  background-color: var(--blanc);
+  border: 2px solid var(--vert);
+  border-radius: 1.1rem;
+}
+
+.submit-creation,
+.submit-connexion {
+  width: 90%;
+  padding: .5rem 1.1rem;
+  margin: .4rem;
+  background-color: var(--vert);
+  color: var(--blanc);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  border: 2px solid var(--vert-clair);
+  border-radius: 1.1rem;
+  font-weight: 500;
+}
+
+.mdp-oublie {
+  display: block;
+  width: 100%;
+  align-self: center;
+  text-align: center;
+  padding: .3rem;
+  background-color: var(--rose-fonce);
+  color: var(--rose-clair);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  border: 2px solid var(--rose-clair);
+  border-radius: .4rem;
+}
+
+.mdp-oublie:hover {
+  text-decoration: none;
+  color: var(--rose-clair);
+}
+
+/* MEDIA QUERY 
+- Tablette horizontal
+- Desktop */
+@media (min-width: 1023px) {
+  .card-accueil {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    max-width: 80vw;
+    gap: 4vw;
+  }
+
+  .logo-ph {
+    max-width: 45%;
+    height: auto;
+    flex-shrink: 1; /* ← très important */
+  }
+
+  .card-body {
+    max-width: 45%;
+    flex-shrink: 1;
+  }
+
+  .btn-creation,
+  .btn-connexion,
+  .submit-creation,
+  .submit-connexion,
+  .card-body a {
+    position: relative;
+    display: inline-block;
+    padding: .5rem 1rem;
+    margin: .4rem;
+    font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+    font-size: 1.2rem;
+    color: var(--vert-clair);
+    text-decoration: none;
+    border: 2px solid var(--vert-clair);
+    border-radius: 1.1rem;
+    background-image: linear-gradient(to right, var(--vert-clair), var(--vert-clair));
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-color: var(--vert);
+    transition: background-size .7s ease-in-out, color .7s ease-in-out;
+  }
+
+  .btn-creation:hover,
+  .btn-connexion:hover,
+  .submit-creation:hover,
+  .submit-connexion:hover,
+  .card-body a:hover {
+    background-size: 100% 100%;
+    color: var(--gris);
+    text-decoration: none;
+  }
+
+  .mdp-oublie {
+    display: block;
+    width: 80%;
+    margin: .3rem auto 0 auto;
+    text-align: center;
+    transition: background-color .5s ease-in-out, color .5s ease-in-out;
+  }
+
+  .mdp-oublie:hover {
+    background-color: var(--rose-clair-2);
+    color: var(--rose-fonce);
+  }
+}
