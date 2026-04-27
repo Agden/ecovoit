@@ -152,6 +152,4 @@ http://localhost/ecovoit
 ---
 
 ## Auteur
-
-Agathe Denhaerynck
-
+DENHAERYNCK Agathe
