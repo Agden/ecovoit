@@ -25,12 +25,12 @@
                 <!-- Menu déroulant quand on clique sur le cercle + -->
                 <div class="profil-mob-deroulant" id="profil-menu">
                     <ul class="deroulage-services">
-                        <li><a href="../html/profil-user.html">Mon profil</a></li>
-                        <li><a href="../html/propo-trajet.html">Proposer un trajet</a></li>
-                        <li><a href="/html/proposition-trajet.html#mes-trajets-en-cours">Trajets proposés</a></li>
-                        <li><a href="../html/hist-conducteur.html">Historique conducteur</a></li>
-                        <li><a href="../html/hist-passager.html">Historique passager</a></li>
-                        <li><a href="../html/parametre.html">Paramètres</a></li>
+                        <li><a href="../html/profil-user.php">Mon profil</a></li>
+                        <li><a href="../html/propo-trajet.php">Proposer un trajet</a></li>
+                        <li><a href="/html/proposition-trajet.php#mes-trajets-en-cours">Trajets proposés</a></li>
+                        <li><a href="../html/hist-conducteur.php">Historique conducteur</a></li>
+                        <li><a href="../html/hist-passager.php">Historique passager</a></li>
+                        <li><a href="../html/parametre.php">Paramètres</a></li>
                     </ul>
                 </div>
         

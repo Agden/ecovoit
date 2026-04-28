@@ -18,11 +18,13 @@
                 <button class="nav-h-btn-profil"><i class="bi bi-plus-circle-fill"></i></button>
                 <!-- Menu déroulant quand on clique sur le cercle + -->
                 <div class="profil-mob-deroulant" id="profil-menu">
-                    <ul class="mob-deroulage">
+                    <ul class="deroulage-services">
+                        <li><a href="../html/profil-user.php">Mon profil</a></li>
+                        <li><a href="../html/propo-trajet.php">Proposer un trajet</a></li>
+                        <li><a href="/html/proposition-trajet.php#mes-trajets-en-cours">Trajets proposés</a></li>
                         <li><a href="../html/hist-conducteur.php">Historique conducteur</a></li>
                         <li><a href="../html/hist-passager.php">Historique passager</a></li>
-                        <li><a href="../html/mention.php">Mentions légales</a></li>
-                        <li><a href="../html/pol-conf.php">Politique de confidentialité</a></li>
+                        <li><a href="../html/parametre.php">Paramètres</a></li>
                     </ul>
                 </div>
         
