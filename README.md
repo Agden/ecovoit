@@ -151,5 +151,12 @@ http://localhost/ecovoit
 
 ---
 
+## Conteneurisation
+
+Une conteneurisation avec Docker a été envisagée pour améliorer la reproductibilité du projet.
+Cependant, celle-ci n’a pas pu être finalisée en raison de contraintes d’environnement local.
+
+Elle reste une amélioration future.
+
 ## Auteur
 DENHAERYNCK Agathe
