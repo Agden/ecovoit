@@ -34,7 +34,7 @@
                     </ul>
                 </div>
         
-                <a href="../html/profil-user.html" class="nav-h-btn"><!--Page profil-->
+                <a href="../html/profil-user.php" class="nav-h-btn"><!--Page profil-->
                     <i class="bi bi-person-fill"></i>
             </nav>
 
@@ -96,7 +96,7 @@
 
             <!-- CORPS -->            
             <main class="main-container">                
-                    <a href="../html/profil-user.html">Retour à mon profil</a>                
+                    <a href="../html/profil-user.php">Retour à mon profil</a>                
 
                 <section class="trajet-form">
                     <h2>Proposer un trajet</h2>
@@ -230,8 +230,8 @@
             </main>
             <!--Barre de navigation BAS mobile / Tablette-->
             <nav class="nav-b-mob">
-                <a href="../html/search-trajet.html" class="nav-b-btn"><i class="bi bi-search"></i></a><!--Page rechercher un trajet-->
-                <a href="../html/propo-trajet.html" class="nav-b-btn"><i class="fas fa-road"></i></a><!--Page proposition de trajet-->
+                <a href="../html/search-trajet.php" class="nav-b-btn"><i class="bi bi-search"></i></a><!--Page rechercher un trajet-->
+                <a href="../html/propo-trajet.php" class="nav-b-btn"><i class="fas fa-road"></i></a><!--Page proposition de trajet-->
             </nav>
 
             <!-- FOOTER-->
@@ -239,8 +239,8 @@
                 <div class="container-footer">
                     <div class="all-cadre">
                         <section class="cadre-footer-1">
-                            <a href="../html/mention.html" class="small-text-footer"> Mentions Légales </a><!--Page mention-->
-                            <a href="../html/pol-conf.html" class="small-text-footer">Politique de confidentialité</a><!--Page polDConf-->
+                            <a href="../html/mention.php" class="small-text-footer"> Mentions Légales </a><!--Page mention-->
+                            <a href="../html/pol-conf.php" class="small-text-footer">Politique de confidentialité</a><!--Page polDConf-->
                         </section>
 
                         <section class="cadre-footer-2">
