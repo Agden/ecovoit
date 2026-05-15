@@ -21,7 +21,7 @@
                     <ul class="deroulage-services">
                         <li><a href="../html/profil-user.php">Mon profil</a></li>
                         <li><a href="../html/propo-trajet.php">Proposer un trajet</a></li>
-                        <li><a href="/html/proposition-trajet.php#mes-trajets-en-cours">Trajets proposés</a></li>
+                        <li><a href="/html/propo-trajet.php#mes-trajets-en-cours">Trajets proposés</a></li>
                         <li><a href="../html/hist-conducteur.php">Historique conducteur</a></li>
                         <li><a href="../html/hist-passager.php">Historique passager</a></li>
                         <li><a href="../html/parametre.php">Paramètres</a></li>
@@ -65,7 +65,7 @@
                             <ul class="deroulage-services">
                                 <li><a href="../html/profil-user.php">Mon profil</a></li>
                                 <li><a href="../html/propo-trajet.php">Proposer un trajet</a></li>
-                                <li><a href="/html/proposition-trajet.php#mes-trajets-en-cours">Trajets proposés</a></li>
+                                <li><a href="/html/propo-trajet.php#mes-trajets-en-cours">Trajets proposés</a></li>
                                 <li><a href="../html/hist-conducteur.php">Historique conducteur</a></li>
                                 <li><a href="../html/hist-passager.php">Historique passager</a></li>
                                 <li><a href="../html/parametre.php">Paramètres</a></li>
@@ -182,7 +182,7 @@
                             
                         <div class="les-boutons">
                                 <a class="btn-slide-2" href="../html/propo-trajet.php">Proposer un trajet</a>
-                                <a class="btn-slide-2" href="../html/proposition-trajet.php#mes-trajets-en-cours">Trajets proposés</a>
+                                <a class="btn-slide-2" href="../html/propo-trajet.php#mes-trajets-en-cours">Trajets proposés</a>
                                 <a class="btn-slide-2" href="../html/hist-conducteur.php">Historique</a>                            
                         </div>
                     </div>

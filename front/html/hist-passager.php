@@ -21,7 +21,7 @@
                     <ul class="deroulage-services">
                         <li><a href="../html/profil-user.php">Mon profil</a></li>
                         <li><a href="../html/propo-trajet.php">Proposer un trajet</a></li>
-                        <li><a href="/html/proposition-trajet.php#mes-trajets-en-cours">Trajets proposés</a></li>
+                        <li><a href="/html/propo-trajet.php#mes-trajets-en-cours">Trajets proposés</a></li>
                         <li><a href="../html/hist-conducteur.php">Historique conducteur</a></li>
                         <li><a href="../html/hist-passager.php">Historique passager</a></li>
                         <li><a href="../html/parametre.php">Paramètres</a></li>
@@ -65,7 +65,7 @@
                             <ul class="deroulage-services">
                                 <li><a href="../html/profil-user.php">Mon profil</a></li>
                                 <li><a href="../html/propo-trajet.php">Proposer un trajet</a></li>
-                                <li><a href="/html/proposition-trajet.php#mes-trajets-en-cours">Trajets proposés</a></li>
+                                <li><a href="/html/propo-trajet.php#mes-trajets-en-cours">Trajets proposés</a></li>
                                 <li><a href="../html/hist-conducteur.php">Historique conducteur</a></li>
                                 <li><a href="../html/hist-passager.php">Historique passager</a></li>
                                 <li><a href="../html/parametre.php">Paramètres</a></li>
@@ -157,7 +157,7 @@
             <!--Barre de navigation BAS mobile / Tablette-->
             <nav class="nav-b-mob">
                 <a href="../html/search-trajet.php" class="nav-b-btn"><i class="bi bi-search"></i></a><!--Page rechercher un trajet-->
-                <a href="../html/propo-trajet.php" class="nav-b-btn"><i class="fas fa-road"></i></a><!--Page proposition de trajet-->
+                <a href="../html/propo-trajet.php" class="nav-b-btn"><i class="fas fa-road"></i></a><!--Page propo de trajet-->
             </nav>
 
             <!-- FOOTER-->

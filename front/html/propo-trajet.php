@@ -27,7 +27,7 @@
                     <ul class="deroulage-services">
                         <li><a href="../html/profil-user.php">Mon profil</a></li>
                         <li><a href="../html/propo-trajet.php">Proposer un trajet</a></li>
-                        <li><a href="/html/proposition-trajet.php#mes-trajets-en-cours">Trajets proposés</a></li>
+                        <li><a href="/html/propo-trajet.php#mes-trajets-en-cours">Trajets proposés</a></li>
                         <li><a href="../html/hist-conducteur.php">Historique conducteur</a></li>
                         <li><a href="../html/hist-passager.php">Historique passager</a></li>
                         <li><a href="../html/parametre.php">Paramètres</a></li>
@@ -71,7 +71,7 @@
                             <ul class="deroulage-services">
                                 <li><a href="../html/profil-user.php">Mon profil</a></li>
                                 <li><a href="../html/propo-trajet.php">Proposer un trajet</a></li>
-                                <li><a href="/html/proposition-trajet.php#mes-trajets-en-cours">Trajets proposés</a></li>
+                                <li><a href="/html/propo-trajet.php#mes-trajets-en-cours">Trajets proposés</a></li>
                                 <li><a href="../html/hist-conducteur.php">Historique conducteur</a></li>
                                 <li><a href="../html/hist-passager.php">Historique passager</a></li>
                                 <li><a href="../html/parametre.php">Paramètres</a></li>
@@ -184,7 +184,7 @@
                 <section class="mes-trajets">
                     <h3 id="mes-trajets-en-cours">Mes trajets proposés</h3>
                     <div class="cadre-mes-propositions">                    
-                        <div class="proposition-1">
+                        <div class="proposition-1"> 
                             <p><b>Départ :</b> Argentan</p>
                             <p><b>Arrivée : </b> Lille</p>
                             <p><b>Le :</b> 26/07/2025</p>
