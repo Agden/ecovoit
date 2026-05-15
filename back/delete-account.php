@@ -17,6 +17,6 @@ $stmt->execute([$user_id]);
 session_unset();
 session_destroy();
 
-// Redirection
-header("Location: /front/html/accueil.php");
+// Redirection vers la page publique
+header("Location: /index.php");
 exit;
