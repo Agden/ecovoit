@@ -31,7 +31,7 @@ session_start();
                         <!-- Bouton Création / Connexion -->
                         <button class="btn-creation" id="btn-creation">Créer un compte</button>
                         <button class="btn-connexion" id="btn-connexion">Se connecter</button>
-                        <a href="/front/html/accueil.php">Continuer sans compte</a>
+                        <a href="front/html/accueil.php">Continuer sans compte</a>
 
                         <!-- Form créer un compte -->
                         <div class="form-creation" id="form-creation" style="display: none;">
