@@ -1,161 +1,192 @@
-<?php session_start(); ?>
+<?php 
+session_start();
+require '../../back/config.local.php';
+
+// Récupérer l'ID du covoiturage
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+if (!$id) {
+    header("Location: search-trajet.php");
+    exit;
+}
+
+// Récupérer les infos du trajet
+$stmt = $pdo->prepare("
+    SELECT c.*, u.pseudo, u.photo, u.id as chauffeur_id,
+    v.modele, v.energie, v.couleur, v.immatriculation, m.libelle as marque
+    FROM covoiturage c
+    JOIN users u ON c.chauffeur_id = u.id
+    JOIN voiture v ON c.voiture_id = v.voiture_id
+    JOIN marque m ON v.marque_id = m.marque_id
+    WHERE c.covoiturage_id = ?
+");
+$stmt->execute([$id]);
+$trajet = $stmt->fetch();
+
+if (!$trajet) {
+    header("Location: search-trajet.php");
+    exit;
+}
+
+// Récupérer les préférences du chauffeur
+$stmt = $pdo->prepare("SELECT * FROM preferences WHERE user_id = ?");
+$stmt->execute([$trajet['chauffeur_id']]);
+$prefs = $stmt->fetch();
+
+// Récupérer les avis validés du chauffeur
+$stmt = $pdo->prepare("
+    SELECT a.*, u.pseudo 
+    FROM avis a
+    JOIN users u ON a.user_id = u.id
+    WHERE a.covoiturage_id IN (
+        SELECT covoiturage_id FROM covoiturage WHERE chauffeur_id = ?
+    )
+    AND a.statut = 'validé'
+");
+$stmt->execute([$trajet['chauffeur_id']]);
+$avis = $stmt->fetchAll();
+?>
 <!DOCTYPE html>
-    <html lang="fr">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Recherchez un trajet</title>
-            <link rel="stylesheet" href="../css/fiche.css">
-            <!-- Lien vers Bootstrap Icons -->
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-            <!--Intégrer la carte en CSS-->
-            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-                <!--Intégrer la carte en JS-->
-            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-            <!--Routing  machine CSS-->
-            <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"/>
-        </head>
-        <body>
-                <!-- Barre de navigation mobile/tablette (haut) -->
-            <?php include 'nav-top.php'; ?>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Détail du trajet</title>
+        <link rel="stylesheet" href="../css/fiche.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    </head>
+    <body>
+        <?php include 'nav-top.php'; ?>
 
-            <section class="bandeau-photo">
-                <div class="img-bandeau">
-                    <img src="../img/route-2.jpg" alt="Trajet écoresponsable">
+        <section class="bandeau-photo">
+            <div class="img-bandeau">
+                <img src="../img/route-2.jpg" alt="Trajet écoresponsable">
+            </div>
+        </section>
+
+        <main class="maini-container">
+            <div class="fiche-info-profil">
+                <a href="search-trajet.php" class="link-retour">RETOUR</a>
+                <h1>Fiche détails</h1>
+
+                <!-- Profil chauffeur -->
+                <div class="card-profil">
+                    <section class="section-1">
+                        <?php if ($trajet['photo']): ?>
+                            <img src="../img/<?= htmlspecialchars($trajet['photo']) ?>" alt="photo profil">
+                        <?php else: ?>
+                            <img src="../img/default-profil.jpg" alt="photo profil">
+                        <?php endif; ?>
+                        <h3><?= htmlspecialchars($trajet['pseudo'] ?? 'Anonyme') ?></h3>
+                    </section>
+                    <section class="section-2">
+                        <h4>Véhicule</h4>
+                        <p><b>Marque :</b> <?= htmlspecialchars($trajet['marque']) ?></p>
+                        <p><b>Modèle :</b> <?= htmlspecialchars($trajet['modele']) ?></p>
+                        <p><b>Couleur :</b> <?= htmlspecialchars($trajet['couleur']) ?></p>
+                        <p><b>Énergie :</b> <?= htmlspecialchars($trajet['energie']) ?></p>
+                    </section>
                 </div>
-            </section>
 
-            <!-- CORPS -->
-            <main class="maini-container">
-                <div class="fiche-info-profil">
-                    <a href="#" class="link-retour">RETOUR</a>
-                    <h1>Fiche détails</h1>
-                    <div class="card-profil">                        
-                        <section class="section-1">
-                            <img src="../img/photo-profil-1.jpg">                          
-                                <h3>Maxence D.</h3>
-                                ⭐️⭐️⭐️⭐️⭐️                                                    
-                        </section>
-                        <section class="section-2">
-                            <h4>Vehicule</h4>
-                            <p><b>Marque :</b> Volkswagen</p>
-                            <p><b>Modèle :</b> ID.3</p>
-                            <p><b>Couleur :</b> Rouge</p>
-                            <p><b>Plaque d'IM :</b>GS-104-HH </p>
-                        </section>
-                        <section class="section-3">
-                            <h3>Description personnelle</h3>
-                            <p><i>L'utilisateur n'a pas ajouté de 
-                                description.</i></p>
-                        </section>
-                    </div>
+                <!-- Préférences -->
+                <div class="card-preference">
+                    <h3>Préférences</h3>
+                    <?php if ($prefs): ?>
+                        <p><b>Fumeur :</b> <?= $prefs['fumeur'] ? 'Oui <i class="bi bi-check"></i>' : 'Non <i class="bi bi-x"></i>' ?></p>
+                        <p><b>Animaux :</b> <?= $prefs['animaux'] ? 'Oui <i class="bi bi-check"></i>' : 'Non <i class="bi bi-x"></i>' ?></p>
+                        <?php if ($prefs['commentaire']): ?>
+                            <p><b>Commentaire :</b> <?= htmlspecialchars($prefs['commentaire']) ?></p>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <p><i>Aucune préférence renseignée.</i></p>
+                    <?php endif; ?>
+                </div>
 
-                    <div class="card-preference">
-                        <h3>Préférences</h3>
-                        <p><b>Musique :</b> Oui <i class="bi bi-check"></i></p>
-                        <p><b>Animaux :</b> Non <i class="bi bi-x"></i></p>
-                        <p><b>Bavardage :</b> Oui <i class="bi bi-check"></i></p>
-                        <p><b>Fumeur :</b> Oui <i class="bi bi-check"></i></p>
-                    </div>
-
-                    <div class="card-info-trajet">
-                        <h3>Infos trajet</h3>
-                        <div class="all">
-                            <div class="gauche">
-                                <p><b>Départ :</b> Argentan - 14h30</p>
-                                <p><b>Arrivée :</b> Lille - 19h00</p>
-                                <p><b>Date :</b> 24 / 07 / 2025</p>
-                            </div>
-                            <div class="droite">
-                                <p><b>Places restantes :</b> 2</p>
-                                <p><b>Prix :</b> 27.5 €</p>
-                                <p><b>Voyage Eco :</b> Oui</p>
-                            </div>
+                <!-- Infos trajet -->
+                <div class="card-info-trajet">
+                    <h3>Infos trajet</h3>
+                    <div class="all">
+                        <div class="gauche">
+                            <p><b>Départ :</b> <?= htmlspecialchars($trajet['lieu_depart']) ?> - <?= $trajet['heure_depart'] ?></p>
+                            <p><b>Arrivée :</b> <?= htmlspecialchars($trajet['lieu_arrivee']) ?></p>
+                            <p><b>Date :</b> <?= date('d/m/Y', strtotime($trajet['date_depart'])) ?></p>
                         </div>
-                        <button type="submit">RESERVER</button>
-                        <a class="btn-retour" href="../html/recherche.php">RETOUR</a>                        
+                        <div class="droite">
+                            <p><b>Places restantes :</b> <?= $trajet['nb_place'] ?></p>
+                            <p><b>Prix :</b> <?= $trajet['prix_personne'] ?> €</p>
+                            <p><b>Voyage Eco :</b> 
+                                <?= strtolower($trajet['energie']) === 'électrique' ? '🌿 Oui' : 'Non' ?>
+                            </p>
+                        </div>
                     </div>
 
-                    <div class="card-note-avis">                        
-                        <h3>Notes & Avis</h3>
+                    <?php if ($trajet['nb_place'] > 0): ?>
+                        <?php if (isset($_SESSION['user_id'])): ?>
+                            <form action="../../back/participer.php" method="POST">
+                                <input type="hidden" name="covoiturage_id" value="<?= $trajet['covoiturage_id'] ?>">
+                                <button type="submit">RÉSERVER</button>
+                            </form>
+                        <?php else: ?>
+                            <a href="../../index.php" class="btn-reserver">Se connecter pour réserver</a>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <p style="color:red">Plus de places disponibles</p>
+                    <?php endif; ?>
 
-                        <section class="commentaire">
-                            <h4>Martine J.</h4>                            
-                            <div class="etoile-titre">
-                                <p>⭐️⭐️⭐️⭐️⭐️ - <b>Super trajet !! </b></p>
-                            </div>
-                            <div class="text-commentaire">
-                                <p>Un super trajet qui m'a semblé plus rapide grâce à la bonne humeur
-                                du conducteur. Je recommande. Conduite très fluide et agréable. Ses choix
-                                de musique sont bon, et on peut mêeme mettre notre propre musique. Je recommande.</p>
-                            </div>
-                        </section>
-                        
-
-                        <section class="commentaire">                            
-                            <h4>Claire H.</h4>                            
-                            <div class="etoile-titre">
-                                <p>⭐️⭐️⭐️⭐️⭐️ - <b>Rien à redire</b></p>
-                            </div>
-                            <div class="text-commentaire">
-                                <p>Trajet très agréable avec Maxence, ponctuel et super sympa. 
-                                    On a discuté tout le long, et il a même fait une petite 
-                                    pause café à mi-chemin. Je recommande à 100% !</p>
-                            </div>
-                        </section>
-
-                        <section class="commentaire">
-                            <div class="prenom">
-                                <h4>Michel 63</h4>
-                            </div>
-                            <div class="etoile-titre">
-                                <p>⭐️⭐️⭐️⭐️⭐️ - <b>Très bien</b></p> 
-                            </div>
-                            <div class="text-commentaire">
-                                <p>Bon trajet dans l'ensemble. Voiture confortable et conduite prudente. 
-                                    Juste un peu de musique un peu forte au début, mais Maxence a baissé 
-                                    le son dès que je lui ai demandé. Très correct.</p>
-                            </div>
-                        </section>
-                    </div>
+                    <a class="btn-retour" href="search-trajet.php">RETOUR</a>
                 </div>
-            </main>
 
-            <!--Barre de navigation BAS mobile / Tablette-->
-            <?php include 'nav-bottom.php'; ?>
-
-            <!-- FOOTER-->
-            <footer>
-                <div class="container-footer">
-                    <div class="all-cadre">
-                        <section class="cadre-footer-1">
-                            <a href="../html/mention.php" class="small-text-footer"> Mentions Légales </a><!--Page mention-->
-                            <a href="../html/pol-conf.php" class="small-text-footer">Politique de confidentialité</a><!--Page polDConf-->
-                        </section>
-
-                        <section class="cadre-footer-2">
-                            <ul class="contact-footer">
-                                <li class="telephone">
-                                    <i class="bi bi-telephone-fill"></i>
-                                    06 34 48 41 06
-                                </li>
-                                <li class="mail">
-                                    <i class="bi bi-envelope"></i>
-                                    ecovoit.test@gmail.com
-                                </li>
-                            </ul>
-                        </section>
-
-                        <section class="logo-footer">
-                            <img src="../img/arbre.jpg" alt="logo">
-                        </section>
-                    </div>
+                <!-- Avis -->
+                <div class="card-note-avis">
+                    <h3>Notes & Avis</h3>
+                    <?php if (empty($avis)): ?>
+                        <p><i>Aucun avis pour ce chauffeur.</i></p>
+                    <?php else: ?>
+                        <?php foreach ($avis as $a): ?>
+                            <section class="commentaire">
+                                <h4><?= htmlspecialchars($a['pseudo']) ?></h4>
+                                <div class="etoile-titre">
+                                    <p><?= str_repeat('⭐️', $a['note']) ?> - <b><?= htmlspecialchars($a['commentaire']) ?></b></p>
+                                </div>
+                            </section>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
-            </footer>
-            <!-- Scripts JS-->
-            <script src="../js/menu-deroulant.js"></script>
-        </body>
-    </html>
+
+            </div>
+        </main>
+
+        <?php include 'nav-bottom.php'; ?>
+
+        <footer>
+            <div class="container-footer">
+                <div class="all-cadre">
+                    <section class="cadre-footer-1">
+                        <a href="../html/mention.php" class="small-text-footer">Mentions Légales</a>
+                        <a href="../html/pol-conf.php" class="small-text-footer">Politique de confidentialité</a>
+                    </section>
+                    <section class="cadre-footer-2">
+                        <ul class="contact-footer">
+                            <li class="telephone">
+                                <i class="bi bi-telephone-fill"></i>
+                                06 34 48 41 06
+                            </li>
+                            <li class="mail">
+                                <i class="bi bi-envelope"></i>
+                                ecovoit.test@gmail.com
+                            </li>
+                        </ul>
+                    </section>
+                    <section class="logo-footer">
+                        <img src="../img/arbre.jpg" alt="logo">
+                    </section>
+                </div>
+            </div>
+        </footer>
+
+        <script src="../js/menu-deroulant.js"></script>
+    </body>
+</html>

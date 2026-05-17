@@ -1,29 +1,24 @@
 <?php
 session_start();
-require "config.php";
+require "config.local.php";
 
-// sécurité : vérifier si connecté
 if (!isset($_SESSION["user_id"])) {
     die("Non autorisé");
 }
 
 $user_id = $_SESSION["user_id"];
 
-// récupérer les données
-$nom = $_POST["nom"];
-$prenom = $_POST["prenom"];
-$telephone = $_POST["telephone"];
-$email = $_POST["email"];
-$adresse = $_POST["adresse"];
+$nom       = trim($_POST["nom"] ?? '');
+$prenom    = trim($_POST["prenom"] ?? '');
+$pseudo    = trim($_POST["pseudo"] ?? '');
+$telephone = trim($_POST["telephone"] ?? '');
+$email     = trim($_POST["email"] ?? '');
+$adresse   = trim($_POST["adresse"] ?? '');
 
-// mise à jour
-$sql = "UPDATE users 
-        SET nom = ?, prenom = ?, telephone = ?, email = ?, adresse = ?
-        WHERE id = ?";
+$stmt = $pdo->prepare("UPDATE users 
+        SET nom = ?, prenom = ?, pseudo = ?, telephone = ?, email = ?, adresse = ?
+        WHERE id = ?");
+$stmt->execute([$nom, $prenom, $pseudo, $telephone, $email, $adresse, $user_id]);
 
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$nom, $prenom, $telephone, $email, $adresse, $user_id]);
-
-// redirection
 header("Location: ../front/html/accueil.php");
 exit;

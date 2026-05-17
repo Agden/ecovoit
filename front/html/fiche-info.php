@@ -34,6 +34,7 @@
                         <form class="form-info" action="../../back/save-info.php" method="post" id="form-info">
                             <input type="text" id="nom" placeholder="Nom" name="nom" required>
                             <input type="text" id="prenom" placeholder="Prénom" name="prenom" required>
+                            <input type="text" id="pseudo" name="pseudo" placeholder="Pseudo (affiché aux autres utilisateurs)" required>
                             <input type="tel" id="telephone" name="telephone" placeholder="N° téléphone" pattern="^0[1-9]\d{8}$">
                             <input type="email" id="email" name="email" placeholder="Adresse e-mail" required>
                             <input type="text" id="adresse" name="adresse" placeholder="Adresse postale" maxlength="150">
