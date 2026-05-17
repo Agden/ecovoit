@@ -45,7 +45,7 @@ session_start();
 
                         <!-- Formulaire Se connecter -->
                         <div class="form-connexion" id="form-connexion" style="display: none;">                        
-                            <form action="/back/login.php" method="post">
+                            <form action="back/login.php" method="post">
                                 <h3>Se connecter</h3>
                                 <input type="email" name="email" class="form-control" placeholder="Email" required>
                                 <input type="password" name="password" class="form-control" placeholder="Mot de passe" required>
