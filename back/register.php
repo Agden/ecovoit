@@ -38,5 +38,5 @@ $user_id = $pdo->lastInsertId();
 $_SESSION["user_id"] = $user_id;
 
 // Redirection
-header("Location: /front/html/fiche-info.php");
+header("Location: ../front/html/fiche-info.php");
 exit;
