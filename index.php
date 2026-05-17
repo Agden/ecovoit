@@ -35,7 +35,7 @@ session_start();
 
                         <!-- Form créer un compte -->
                         <div class="form-creation" id="form-creation" style="display: none;">
-                            <form action="/back/register.php" method="post"> <!--vers fiche d'inscription-->
+                            <form action="back/register.php" method="post"> <!--vers fiche d'inscription-->
                                 <h3>Créer un compte</h3>
                                 <input type="email" name="email" class="form-control" placeholder="Email" required>
                                 <input type="password" name="password" class="form-control" placeholder="Mot de passe" required>
