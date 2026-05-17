@@ -35,17 +35,17 @@
                 <section class="trajet-form">
                     <h2>Proposer un trajet</h2>
 
-                    <form> 
+                    <form action="../../back/save-trajet.php" method="POST"> 
                         <div class="form-partie-1">   
                             <div class="depart-zone">
                                 <label for="depart">Départ</label>
-                                <input type="text" id="depart" placeholder="Ville de départ" class="barre-recherche" required>
+                                <input type="text" id="depart" name="lieu_depart" placeholder="Ville de départ" class="barre-recherche" required>
                             <div id="suggestions-depart" class="suggestions-list"></div>
                             </div>
 
                             <div class="arrivee-zone">
                                 <label for="arrivee">Arrivée</label>
-                                <input type="text" id="arrivee" placeholder="Ville d'arrivée" class="barre-recherche" required>
+                                <input type="text" id="arrivee" name="lieu_arrivee" placeholder="Ville d'arrivée" class="barre-recherche" required>
                                 <div id="suggestions-arrivee" class="suggestions-list"></div>
                             </div>
 
@@ -57,22 +57,22 @@
                         <div class="form-partie-2">
                             <div class="date-zone">
                                 <label for="date">Date</label>
-                                <input type="date" id="date" required>
+                                <input type="date" id="date" name="date_depart" required>
                             </div>
 
                             <div class="heure-zone">
                                 <label for="heure">Heure</label>
-                                <input type="time" id="heure" required>
+                                <input type="time" id="heure" name="heure_depart" required>
                             </div>
 
                             <div class="place-dispo-zone">
                                 <label for="places">Places disponibles</label>
-                                <input type="number" id="places" min="1" max="4" required>
+                                <input type="number" id="places" name="nb_place" min="1" max="4" required>
                             </div>
 
                             <div class="prix-zone">
                                 <label for="prix">Prix par passager (€)</label>
-                                <input type="number" id="prix" min="1" step="0.5">
+                                <input type="number" id="prix" name="prix_personne" min="1" step="0.5">
                             </div>
 
                             <div class="marque-zone">
@@ -105,7 +105,7 @@
 
                             <div class="commentaire-zone">
                                 <label for="commentaire">Commentaire</label>
-                                <textarea id="commentaire" placeholder="Infos complémentaires…"></textarea>
+                                <textarea id="commentaire" name="commentaire" placeholder="Infos complémentaires…"></textarea>
                             </div>
 
                             <div class="cadre-btn-proposer">
@@ -117,48 +117,41 @@
 
                 <section class="mes-trajets">
                     <h3 id="mes-trajets-en-cours">Mes trajets proposés</h3>
-                    <div class="cadre-mes-propositions">                    
-                        <div class="proposition-1"> 
-                            <p><b>Départ :</b> Argentan</p>
-                            <p><b>Arrivée : </b> Lille</p>
-                            <p><b>Le :</b> 26/07/2025</p>
-                            <p><b>Heure :</b> 14 H 30</p>
-                            <p><b>Nb place :</b> 3</p>
-                            <p><b>Prix / personne :</b> 29€</p>
-                            <div class="btn-bas-propo">
-                                <button class="btn-modifier" type="button">Modifier</button>
-                                <button class="btn-supprimer" type="button">Supprimer</button>
-                                <button class="btn-covoiturage" type="button">Démarrer</button>
-                            </div>                            
-                        </div>
+                    <div class="cadre-mes-propositions">
+                    <?php
+                        require '../../back/config.local.php';
+                        $stmt = $pdo->prepare("
+                            SELECT c.*, v.modele, v.energie, m.libelle as marque
+                            FROM covoiturage c
+                            JOIN voiture v ON c.voiture_id = v.voiture_id
+                            JOIN marque m ON v.marque_id = m.marque_id
+                            WHERE c.chauffeur_id = ?
+                            ORDER BY c.date_depart DESC
+                        ");
+                        $stmt->execute([$_SESSION['user_id']]);
+                        $trajets = $stmt->fetchAll();
 
-                        <div class="proposition-2">
-                            <p><b>Départ :</b> Lille</p>
-                            <p><b>Arrivée :</b> Antwerpen</p>
-                            <p><b>Le :</b> 28/07/2025</p>
-                            <p><b>Heure : </b> 16 H 00</p>
-                            <p><b>Nb place :</b> 3</p>
-                            <p><b>Prix / personne :</b> 15€</p>
-                            <div class="btn-bas-propo">
-                                <button class="btn-modifier" type="button">Modifier</button>
-                                <button class="btn-supprimer" type="button">Supprimer</button>
-                                <button class="btn-covoiturage" type="button">Démarrer</button>
-                            </div>
-                        </div>
-
-                        <div class="proposition-3">
-                            <p><b>Départ :</b> Lille</p>
-                            <p><b>Arrivée : </b> Argentan</p>
-                            <p><b>Le :</b> 02/08/2025</p>
-                            <p><b> Heure :</b> 10 H 00</p>
-                            <p><b>Nb place :</b> 2</p>
-                            <p><b>Prix / personne :</b> 35€</p>
-                            <div class="btn-bas-propo">
-                                <button class="btn-modifier" type="button">Modifier</button>
-                                <button class="btn-supprimer" type="button">Supprimer</button>
-                                <button class="btn-covoiturage" type="button">Démarrer</button>
-                            </div>
-                        </div>
+                        if (empty($trajets)): ?>
+                            <p>Vous n'avez pas encore proposé de trajet.</p>
+                        <?php else: ?>
+                            <?php foreach ($trajets as $trajet): ?>
+                                <div class="proposition-1">
+                                    <p><b>Départ :</b> <?= htmlspecialchars($trajet['lieu_depart']) ?></p>
+                                    <p><b>Arrivée :</b> <?= htmlspecialchars($trajet['lieu_arrivee']) ?></p>
+                                    <p><b>Le :</b> <?= date('d/m/Y', strtotime($trajet['date_depart'])) ?></p>
+                                    <p><b>Heure :</b> <?= $trajet['heure_depart'] ?></p>
+                                    <p><b>Nb place :</b> <?= $trajet['nb_place'] ?></p>
+                                    <p><b>Prix / personne :</b> <?= $trajet['prix_personne'] ?>€</p>
+                                    <p><b>Véhicule :</b> <?= htmlspecialchars($trajet['marque']) ?> <?= htmlspecialchars($trajet['modele']) ?></p>
+                                    <p><b>Énergie :</b> <?= htmlspecialchars($trajet['energie']) ?></p>
+                                    <div class="btn-bas-propo">
+                                        <button class="btn-modifier" type="button">Modifier</button>
+                                        <button class="btn-supprimer" type="button">Supprimer</button>
+                                        <button class="btn-covoiturage" type="button">Démarrer</button>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </section>                  
             </main>
