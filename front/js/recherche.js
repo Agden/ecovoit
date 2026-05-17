@@ -1,4 +1,4 @@
-// --- carte + autocompletion + résultat de recherche (recherche.html)
+// --- carte + autocompletion + résultat de recherche
 const map = L.map("carte").setView([48.8566, 2.3522], 12);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -53,7 +53,7 @@ function tracerItineraireRoute(depart, arrivee) {
     });
 }
 
-// --- Auto complétion de villes (CORRIGÉ)
+// --- Auto complétion de villes
 function setupAutocomplete(inputId, suggestionsId) {
   const input = document.getElementById(inputId);
   const suggestions = document.getElementById(suggestionsId);
@@ -106,7 +106,7 @@ function setupAutocomplete(inputId, suggestionsId) {
   });
 }
 
-// --- Action du bouton de recherche
+// --- DOMContentLoaded
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("searchBtn");
   const departInput = document.getElementById("depart");
@@ -115,110 +115,77 @@ document.addEventListener("DOMContentLoaded", () => {
   setupAutocomplete("depart", "suggestions-depart");
   setupAutocomplete("arrivee", "suggestions-arrivee");
 
-  btn.addEventListener("click", () => {
-    let departCoordsPromise;
+  if (btn) {
+    btn.addEventListener("click", () => {
+      let departCoordsPromise;
 
-    if (departInput.value.trim() === "") {
-      departCoordsPromise = new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            resolve({
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-              label: "Ma position",
-            });
-          },
-          () => reject()
-        );
-      });
-    } else {
-      departCoordsPromise = Promise.resolve({
-        lat: parseFloat(departInput.dataset.lat),
-        lng: parseFloat(departInput.dataset.lng),
-        label: departInput.value,
-      });
-    }
-
-    const arriveeCoords = {
-      lat: parseFloat(arriveeInput.dataset.lat),
-      lng: parseFloat(arriveeInput.dataset.lng),
-      label: arriveeInput.value,
-    };
-
-    departCoordsPromise.then((departCoords) => {
-      if (
-        !departCoords ||
-        isNaN(arriveeCoords.lat) ||
-        isNaN(arriveeCoords.lng)
-      ) {
-        alert("Veuillez sélectionner une adresse valide.");
-        return;
+      if (departInput.value.trim() === "") {
+        departCoordsPromise = new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              resolve({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+                label: "Ma position",
+              });
+            },
+            () => reject()
+          );
+        });
+      } else {
+        departCoordsPromise = Promise.resolve({
+          lat: parseFloat(departInput.dataset.lat),
+          lng: parseFloat(departInput.dataset.lng),
+          label: departInput.value,
+        });
       }
 
-      tracerItineraireRoute(departCoords, arriveeCoords);
+      const arriveeCoords = {
+        lat: parseFloat(arriveeInput.dataset.lat),
+        lng: parseFloat(arriveeInput.dataset.lng),
+        label: arriveeInput.value,
+      };
 
-      if (marker) map.removeLayer(marker);
-
-      const markerDepart = L.marker([departCoords.lat, departCoords.lng])
-        .bindPopup(`<strong>Départ :</strong> ${departCoords.label}`)
-        .addTo(map);
-
-      const markerArrivee = L.marker([arriveeCoords.lat, arriveeCoords.lng])
-        .bindPopup(`<strong>Arrivée :</strong> ${arriveeCoords.label}`)
-        .addTo(map);
-
-      marker = L.layerGroup([markerDepart, markerArrivee]).addTo(map);
-
-      // 🔥 TES TRAJETS (remis correctement)
-      const trajetsFictifs = [
-        {
-          conducteur: "Maxence D.",
-          note: "⭐️⭐️⭐️⭐️⭐️",
-          profil: "../img/photo-profil-1.jpg",
-          places: 2,
-          prix: 27.5,
-          eco: true,
-          heureDepart: "14h30",
-          heureArrivee: "19h00",
-          date: "24/07/2025",
-          lien: "../html/fiche-profil-1.html"
-        },
-        {
-          conducteur: "Gauthier R.",
-          note: "⭐️⭐️⭐️⭐️",
-          profil: "../img/photo-profil-2.jpg",
-          places: 1,
-          prix: 30,
-          eco: false,
-          heureDepart: "13h00",
-          heureArrivee: "17h45",
-          date: "24/07/2025",
-          lien: "../html/fiche-profil-2.html"
+      departCoordsPromise.then((departCoords) => {
+        if (!departCoords || isNaN(arriveeCoords.lat) || isNaN(arriveeCoords.lng)) {
+          alert("Veuillez sélectionner une adresse valide.");
+          return;
         }
-      ];
 
-      let html = `<h3>${trajetsFictifs.length} trajets trouvés :</h3>`;
+        tracerItineraireRoute(departCoords, arriveeCoords);
 
-      trajetsFictifs.forEach((trajet) => {
-        html += `
-        <div class="carte-trajet">
-          <div class="infos-chauffeur">
-            <img src="${trajet.profil}">
-            <div>
-              <p><strong>${trajet.conducteur}</strong> (${trajet.note})</p>
-              <p>${trajet.places} place(s)</p>
-            </div>
-          </div>
-          <div class="infos-trajet">
-            <p><strong>Départ :</strong> ${departCoords.label}</p>
-            <p><strong>Arrivée :</strong> ${arriveeCoords.label}</p>
-            <p><strong>Prix :</strong> ${trajet.prix}€</p>
-          </div>
-        </div>
-        `;
+        if (marker) map.removeLayer(marker);
+
+        const markerDepart = L.marker([departCoords.lat, departCoords.lng])
+          .bindPopup(`<strong>Départ :</strong> ${departCoords.label}`)
+          .addTo(map);
+
+        const markerArrivee = L.marker([arriveeCoords.lat, arriveeCoords.lng])
+          .bindPopup(`<strong>Arrivée :</strong> ${arriveeCoords.label}`)
+          .addTo(map);
+
+        marker = L.layerGroup([markerDepart, markerArrivee]).addTo(map);
       });
-
-      zoneResultats.innerHTML = html;
     });
-  });
+  }
+
+  // --- Tracer la carte automatiquement si une recherche a déjà été faite
+  const donnees = document.getElementById("donnees-recherche");
+  if (donnees) {
+    const depart = donnees.dataset.depart;
+    const arrivee = donnees.dataset.arrivee;
+
+    if (depart && arrivee) {
+      Promise.all([
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(depart)}&limit=1`).then(r => r.json()),
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(arrivee)}&limit=1`).then(r => r.json())
+      ]).then(([dataDepart, dataArrivee]) => {
+        if (dataDepart.length && dataArrivee.length) {
+          const departCoords = { lat: parseFloat(dataDepart[0].lat), lng: parseFloat(dataDepart[0].lon) };
+          const arriveeCoords = { lat: parseFloat(dataArrivee[0].lat), lng: parseFloat(dataArrivee[0].lon) };
+          tracerItineraireRoute(departCoords, arriveeCoords);
+        }
+      });
+    }
+  }
 });
