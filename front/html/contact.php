@@ -28,7 +28,7 @@
                 <section class="card-contact">
                     <img src="../img/image-contact.jpg">
                     <div class="formulaire">
-                        <form action="/back/data-contact.php" method="POST">
+                        <form action="../../back/data-contact.php" method="POST">
                             <div class="nom">
                                 <label for="nom">Nom complet</label>
                                 <input type="text" id="nom" name="nom" placeholder="Nom - Prénom" required>

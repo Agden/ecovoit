@@ -4,7 +4,7 @@ require "config.php";
 
 // Vérifie que la requête vient bien du formulaire
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: /front/html/contact.php");
+    header("Location: ../front/html/contact.php");
     exit;
 }
 
@@ -31,7 +31,7 @@ if (empty($message)) {
 
 // Si erreurs → retour avec message
 if (!empty($errors)) {
-    header("Location: /front/html/contact.php?error=1");
+    header("Location: ../front/html/contact.php?error=1");
     exit;
 }
 
@@ -50,11 +50,11 @@ try {
     ]);
 
     // Succès
-    header("Location: /front/html/contact.php?success=1");
+    header("Location: ../front/html/contact.php?success=1");
     exit;
 
 } catch (PDOException $e) {
     // Erreur BDD
-    header("Location: /front/html/contact.php?error=2");
+    header("Location: ../front/html/contact.php?error=2");
     exit;
 }

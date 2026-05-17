@@ -65,7 +65,7 @@
             <?php if(isset($_SESSION["user_id"])): ?>
                 <a href="profil-user.php">Mon profil</a>
             <?php else: ?>
-                <a href="/index.php">Se connecter</a>
+                <a href="../../index.php">Se connecter</a>
             <?php endif; ?>
         </li>
     </ul>

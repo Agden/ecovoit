@@ -30,5 +30,5 @@ if (!password_verify($password, $user["password"])) {
 }
 
 $_SESSION["user_id"] = $user["id"];
-header("Location: /front/html/accueil.php");
+header("Location: ../front/html/accueil.php");
 exit;

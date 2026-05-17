@@ -24,7 +24,7 @@
 
             <!-- CORPS -->            
             <main class="main-container">
-                <a class="retour" href="../index.php">  RETOUR  </a>
+                <a class="retour" href="../../index.php">  RETOUR  </a>
                 <div class="titre">
                     <h2>Mes messages</h2>
                 </div>

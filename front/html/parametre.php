@@ -71,10 +71,10 @@
                             <h4>Compte</h4>
                         </div>
                         <div class="btn-compte">
-                            <form action="/back/logout.php" method="post">
+                            <form action="../../back/logout.php" method="post">
                                 <button type="submit" class="btn-deconnexion">Se déconnecter</button>
                             </form>
-                            <form action="/back/delete-account.php" method="post">
+                            <form action="../../back/delete-account.php" method="post">
                                 <button type="submit" class="btn-supprimer">Supprimer le compte</button>
                             </form>
                         </div>

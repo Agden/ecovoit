@@ -24,7 +24,7 @@
 
             <!-- CORPS -->            
             <main class="main-container">
-                <a class="retour" href="../index.php">  RETOUR  </a>
+                <a class="retour" href="../../index.php">  RETOUR  </a>
                 <section class="mentions-legales">
                     <h2>Mentions légales</h2>
                     <p><strong>Nom du site :</strong> EcoVoit’ (Projet fictif dans le cadre d’un examen)</p>
