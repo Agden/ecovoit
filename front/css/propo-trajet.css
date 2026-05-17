@@ -190,6 +190,7 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
     margin-top: 80px;
     margin-bottom: 80px;
     margin-left: auto;
@@ -231,8 +232,9 @@ form {
 .depart-zone, .arrivee-zone {
     display: flex;
     flex-direction: column;
+    position: relative;
     margin: 1rem;
-    width: 100%;
+    width: 80%;
 }
 
 .form-partie-1 label {
@@ -260,6 +262,7 @@ form {
 
 /* Style d l'autocomplétion*/
 .suggestions-list {
+    position: absolute;
     max-width: 100%;
     border: 1px solid var(--noir);
     border-radius: 5px;
@@ -707,6 +710,44 @@ textarea:focus {
         background-size: 100% 100%;
         color: var(--gris);
         text-decoration: none;
+    }
+
+    .depart-zone, .arrivee-zone {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        margin: 1rem;
+        width: 100%;
+        align-items: center;
+    }
+
+    .cadre-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 1rem;
+    }
+
+    .date-zone, 
+    .heure-zone,
+    .place-dispo-zone,
+    .prix-zone,
+    .marque-zone,
+    .modele-zone,
+    .energie-zone,
+    .couleur-zone,
+    .option-zone,
+    .cadre-btn-proposer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin: 1rem;
+    }
+
+    .option-zone legend {
+        text-align: center;
     }
 
     .searchBtn,

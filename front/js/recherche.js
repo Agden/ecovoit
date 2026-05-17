@@ -90,6 +90,7 @@ function setupAutocomplete(inputId, suggestionsId) {
           });
 
           suggestions.style.display = "flex";
+          suggestions.style.flexDirection = "column";
         } else {
           suggestions.style.display = "none";
         }
