@@ -3,6 +3,7 @@
 <!-- Barre de navigation mobile/tablette (haut) -->
 <nav class="nav-h-mob">    
     <button class="nav-h-btn-profil"><i class="bi bi-plus-circle-fill"></i></button>
+    <?php if(isset($_SESSION["user_id"])): ?>
     <div class="profil-mob-deroulant" id="profil-menu">
         <ul class="deroulage-services">
             <li><a href="../html/profil-user.php">Mon profil</a></li>
@@ -13,6 +14,7 @@
             <li><a href="../html/parametre.php">Paramètres</a></li>
         </ul>
     </div>
+    <?php endif; ?>
     <a href="../html/profil-user.php" class="nav-h-btn">
         <i class="bi bi-person-fill"></i>
     </a>
@@ -41,6 +43,7 @@
                 <div class="souligne"></div>
             </a>
         </li>
+        <?php if(isset($_SESSION["user_id"])): ?>
         <li class="accueil">
             <a href="#">
                 Autres services
@@ -57,6 +60,7 @@
                 </ul>
             </div>
         </li>
+        <?php endif; ?>
         <li class="connexion">
             <?php if(isset($_SESSION["user_id"])): ?>
                 <a href="profil-user.php">Mon profil</a>
